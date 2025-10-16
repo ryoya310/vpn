@@ -1,0 +1,34 @@
+services:
+  vpn-nas:
+    container_name: ${CONTAINER_NAME}-vpn-nas
+    build:
+      context: ./vpn/l2tp
+      dockerfile: Dockerfile
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/ppp
+    ports:
+      - "500:500/udp"
+      - "4500:4500/udp"
+      - "1701:1701/udp"
+    environment:
+      - VPN_HOST=${VPN_HOST}
+      - VPN_USER=${VPN_USER}
+      - VPN_PASS=${VPN_PASS}
+      - VPN_PSK=${VPN_PSK}
+      - VPN_RETRY_INTERVAL=${VPN_RETRY_INTERVAL}
+      - NAS_HOST=${NAS_HOST}
+      - NAS_SHARE=${NAS_SHARE}
+      - NAS_USER=${NAS_USER}
+      - NAS_PASS=${NAS_PASS}
+      - NAS_MOUNT_PATH=${NAS_MOUNT_PATH}
+      - NAS_VERS=${NAS_VERS}
+    restart: unless-stopped
+    networks:
+      - vpn-net
+
+networks:
+  vpn-net:
+    driver: bridge
