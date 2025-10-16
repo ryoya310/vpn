@@ -102,13 +102,9 @@ ip addr show | grep -E "ppp|inet " || true
 
 # --- VPNネットワーク追加 ---
 if ip addr show ppp0 >/dev/null 2>&1; then
-  VPN_IP=$(ip -o -4 addr show ppp0 | awk '{print $4}' | cut -d/ -f1)
-  if [ -n "$VPN_IP" ]; then
-    echo "🛠 VPNルート追加: ${VPN_IP}/32"
-    ip route add "${VPN_IP}/32" dev ppp0 || true
-  else
-    echo "⚠️ VPN IPが取得できませんでした。"
-  fi
+  VPN_NET=$(ip -o -4 addr show ppp0 | awk '{print $4}' | cut -d/ -f1 | awk -F. '{print $1"."$2"."$3".0/24"}')
+  echo "🛠 VPNネットワークをルーティング追加: ${VPN_NET}"
+  ip route add "${VPN_NET}" dev ppp0 || true
 else
   echo "❌ ppp0が見つかりません。再試行..."
   sleep "${VPN_RETRY_INTERVAL}"
