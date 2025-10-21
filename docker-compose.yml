@@ -2,10 +2,11 @@ services:
   vpn-nas:
     container_name: ${CONTAINER_NAME}-vpn-nas
     build:
-      context: ./vpn/l2tp
+      context: ./vpn-nas
       dockerfile: Dockerfile
     privileged: true
     cap_add:
+      - SYS_ADMIN
       - NET_ADMIN
     devices:
       - /dev/ppp
@@ -25,10 +26,5 @@ services:
       - NAS_PASS=${NAS_PASS}
       - NAS_MOUNT_PATH=${NAS_MOUNT_PATH}
       - NAS_VERS=${NAS_VERS}
-    restart: unless-stopped
-    networks:
-      - vpn-net
-
-networks:
-  vpn-net:
-    driver: bridge
+    volumes:
+      - /mnt/nas:/mnt/nas:rshared
