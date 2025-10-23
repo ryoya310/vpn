@@ -19,14 +19,14 @@ monitor_nas() {
   while true; do
     sleep "${VPN_RETRY_INTERVAL}"
 
-    # 1️⃣ まずマウント状態確認
+    # 1️⃣ マウント状態確認
     if ! mount | grep -q "${NAS_MOUNT_PATH}"; then
       echo "⚠️ NAS切断検出（アンマウント状態）、再マウント中..."
       mount_nas
       continue
     fi
 
-    # 2️⃣ 次に実際の疎通確認（中身が見えるか？）
+    # 2️⃣ 次に実際の疎通確認
     if ! ls "${NAS_MOUNT_PATH}" >/dev/null 2>&1; then
       echo "⚠️ NAS応答なし、再マウント試行中..."
       umount -f "${NAS_MOUNT_PATH}" >/dev/null 2>&1 || true

@@ -4,6 +4,7 @@ networks:
     driver: bridge
 
 services:
+
   vpn-nas:
     container_name: ${CONTAINER_NAME}-vpn-nas
     build:
@@ -33,3 +34,5 @@ services:
       - NAS_VERS=${NAS_VERS}
     volumes:
       - .${NAS_MOUNT_PATH}:${NAS_MOUNT_PATH}:rshared
+    networks:
+      - shared-net
