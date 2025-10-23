@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-NAS_MOUNT_PATH="${NAS_MOUNT_PATH:-/mnt/nas}"
-
 cleanup() {
   echo "🧹 停止シグナル受信、VPNとNASをクリーンアップ中..."
   mount --make-rprivate "${NAS_MOUNT_PATH}" 2>/dev/null || true

@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-NAS_MOUNT_PATH="${NAS_MOUNT_PATH:-/mnt/nas}"
-
 mount_nas() {
   if mount | grep -q "//${NAS_HOST}/${NAS_SHARE}"; then
     echo "✅ NAS (${NAS_HOST}/${NAS_SHARE}) は既にマウント済み"

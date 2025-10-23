@@ -32,4 +32,4 @@ services:
       - NAS_MOUNT_PATH=${NAS_MOUNT_PATH}
       - NAS_VERS=${NAS_VERS}
     volumes:
-      - ./nas-store:/mnt/nas:rshared
+      - .${NAS_MOUNT_PATH}:${NAS_MOUNT_PATH}:rshared
