@@ -1,3 +1,8 @@
+networks:
+  shared-net:
+    name: ${CONTAINER_NAME}_shared_net
+    driver: bridge
+
 services:
   vpn-nas:
     container_name: ${CONTAINER_NAME}-vpn-nas
@@ -27,4 +32,4 @@ services:
       - NAS_MOUNT_PATH=${NAS_MOUNT_PATH}
       - NAS_VERS=${NAS_VERS}
     volumes:
-      - /mnt/nas:/mnt/nas:rshared
+      - ./nas-store:/mnt/nas:rshared

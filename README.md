@@ -9,3 +9,6 @@ NAS: I-O DATA LanDisk HDL-LEシリーズ
 
 ### 実行
 docker compose up -d --build
+
+### 確認
+ls /mnt/nas
